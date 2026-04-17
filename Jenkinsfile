@@ -322,18 +322,18 @@ pipeline {
                     echo '\n✓ Deployment completed successfully!'
                     
                     //Uncomment below for actual deployment
-                    Example: Deploy to remote server
+                    //Example: Deploy to remote server
                     script {
                         dockerImage = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}") // Build with specific tag
                         docker.build("${DOCKER_HUB_REPO}:latest") // Also build with 'latest' tag
                     }
                     
-                    Example: Push to Docker registry
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                        sh "docker push ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
-                        sh "docker push ${env.DOCKER_IMAGE}:latest"
-                    }
+                    // Example: Push to Docker registry
+                    // withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    //     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    //     sh "docker push ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
+                    //     sh "docker push ${env.DOCKER_IMAGE}:latest"
+                    // }
                     
                     // Example: Deploy to Kubernetes
                     // sh 'kubectl set image deployment/myapp myapp=${env.DOCKER_IMAGE}:${env.DOCKER_TAG}'
