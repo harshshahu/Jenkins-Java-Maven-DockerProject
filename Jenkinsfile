@@ -238,10 +238,10 @@ pipeline {
         stage('Deploy') {
             when {
                 anyOf {
-                    branch 'main'
-                    branch 'origin/main'
-                    expression { env.GIT_BRANCH == 'origin/main' }
-                    expression { env.GIT_BRANCH == 'main' }
+                    branch 'test'
+                    branch 'origin/test'
+                    expression { env.GIT_BRANCH == 'origin/test' }
+                    expression { env.GIT_BRANCH == 'test' }
                 }
             }
             steps {
