@@ -14,6 +14,10 @@ pipeline {
         DOCKER_IMAGE = "harshshahu/${APP_NAME}"
         DOCKER_TAG = "${env.BUILD_NUMBER}"
         PORT = '5000'
+        DOCKER_HUB_REPO = 'harshshahu/jenkins-maven-project' // Docker Hub repository name
+        DOCKER_HUB_CREDENTIALS = 'dockerhub-credentials' // Jenkins credential ID
+        GIT_REPO = 'https://github.com/harshshahu/Jenkins-Java-Maven-DockerProject.git' // Git repository URL
+        IMAGE_TAG = "${BUILD_NUMBER}" // Use Jenkins build number as image tag
     }
     
     options {
@@ -317,17 +321,19 @@ pipeline {
                     
                     echo '\n✓ Deployment completed successfully!'
                     
-                    // Uncomment below for actual deployment
-                    // Example: Deploy to remote server
-                    // sh 'scp target/*-standalone.jar user@server:/deploy/path/'
-                    // sh 'ssh user@server "systemctl restart app-service"'
+                    //Uncomment below for actual deployment
+                    Example: Deploy to remote server
+                    script {
+                        dockerImage = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}") // Build with specific tag
+                        docker.build("${DOCKER_HUB_REPO}:latest") // Also build with 'latest' tag
+                    }
                     
-                    // Example: Push to Docker registry
-                    // withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    //     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    //     sh "docker push ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
-                    //     sh "docker push ${env.DOCKER_IMAGE}:latest"
-                    // }
+                    Example: Push to Docker registry
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        sh "docker push ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
+                        sh "docker push ${env.DOCKER_IMAGE}:latest"
+                    }
                     
                     // Example: Deploy to Kubernetes
                     // sh 'kubectl set image deployment/myapp myapp=${env.DOCKER_IMAGE}:${env.DOCKER_TAG}'
