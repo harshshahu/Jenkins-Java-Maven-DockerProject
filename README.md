@@ -7,8 +7,8 @@ This is a sample Maven project configured with Jenkins Pipeline for CI/CD.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/atulkamble/jenkins-maven-project.git
-cd jenkins-maven-project
+git clone https://github.com/harshshahu/Jenkins-Java-Maven-DockerProject.git
+cd Jenkins-Java-Maven-DockerProject
 ```
 
 ## Project Structure
